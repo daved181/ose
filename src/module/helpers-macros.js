@@ -95,10 +95,11 @@ export function rollItemMacro(itemName) {
       })
     );
   }
-  const item = items[0];
 
-  // Trigger the item roll
-  return item.roll();
+  // Trigger the item macro
+  const item = items[0];
+  if(item.hasMacro())
+      return item.executeMacro();
 }
 
 /**
