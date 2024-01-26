@@ -1,7 +1,9 @@
 import OseItem from "../item/entity";
+import { rollItemMacro } from "../helpers-macros";
 
 import skipRollDialogCheck from "../helpers-behaviour";
 import OseDice from "../helpers-dice";
+import { rollItemMacro } from "../helpers-macros";
 
 /**
  * Used in the rollAttack function to remove zeroes from rollParts arrays
@@ -525,6 +527,8 @@ export default class OseActor extends Actor {
         target: attData.roll.target,
       },
     };
+
+    rollItemMacro(attData.item.data.name)
     // Roll and return
     return OseDice.Roll({
       event: options.event,
