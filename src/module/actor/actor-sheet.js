@@ -4,6 +4,7 @@
 import skipRollDialogCheck from "../helpers-behaviour";
 import OSE from "../config";
 import OseEntityTweaks from "../dialog/entity-tweaks";
+import { rollItemMacro } from "../helpers-macros";
 
 export default class OseActorSheet extends ActorSheet {
   getData() {
@@ -26,7 +27,7 @@ export default class OseActorSheet extends ActorSheet {
     // remove some controls to the editor as the space is lacking
     // if (name === "data.details.description") {
     //   options.toolbar = "styleselect bullist hr table removeFormat save";
-    // }
+    // }t
     super.activateEditor(name, options, initialContent);
   }
 
@@ -183,6 +184,7 @@ export default class OseActorSheet extends ActorSheet {
     } else {
       item.rollFormula({ skipDialog: skipRollDialogCheck(event) });
     }
+    try {rollItemMacro(item.name)} catch (error){console.error(error); return null;}
   }
 
   async _rollSave(event) {
