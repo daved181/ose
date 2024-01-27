@@ -150,94 +150,94 @@ export const OSE = {
     get melee() {
       return {
         label: CONFIG.OSE.tags.melee,
-        image: `${CONFIG.OSE.assetsPath}/melee.png`,
+        image: `${CONFIG.OSE.assetsPath}/melee2.png`,
         icon: "fa-sword",
       };
     },
     get missile() {
       return {
         label: CONFIG.OSE.tags.missile,
-        image: `${CONFIG.OSE.assetsPath}/missile.png`,
+        image: `${CONFIG.OSE.assetsPath}/missile2.png`,
         icon: "fa-bow-arrow",
       };
     },
     get slow() {
       return {
         label: CONFIG.OSE.tags.slow,
-        image: `${CONFIG.OSE.assetsPath}/slow.png`,
+        image: `${CONFIG.OSE.assetsPath}/slow2.png`,
         icon: "fa-weight-hanging",
       };
     },
     get twohanded() {
       return {
         label: CONFIG.OSE.tags.twohanded,
-        image: `${CONFIG.OSE.assetsPath}/twohanded.png`,
+        image: `${CONFIG.OSE.assetsPath}/twohanded2.png`,
         icon: "fa-hands-holding",
       };
     },
     get blunt() {
       return {
         label: CONFIG.OSE.tags.blunt,
-        image: `${CONFIG.OSE.assetsPath}/blunt.png`,
+        image: `${CONFIG.OSE.assetsPath}/blunt2.png`,
         icon: "fa-hammer-crash",
       };
     },
     get brace() {
       return {
         label: CONFIG.OSE.tags.brace,
-        image: `${CONFIG.OSE.assetsPath}/brace.png`,
+        image: `${CONFIG.OSE.assetsPath}/brace2.png`,
         icon: "fa-block-brick",
       };
     },
     get splash() {
       return {
         label: CONFIG.OSE.tags.splash,
-        image: `${CONFIG.OSE.assetsPath}/splash.png`,
+        image: `${CONFIG.OSE.assetsPath}/splash2.png`,
         icon: "fa-burst",
       };
     },
     get reload() {
       return {
         label: CONFIG.OSE.tags.reload,
-        image: `${CONFIG.OSE.assetsPath}/reload.png`,
+        image: `${CONFIG.OSE.assetsPath}/reload2.png`,
         icon: "fa-gear",
       };
     },
     get charge() {
       return {
         label: CONFIG.OSE.tags.charge,
-        image: `${CONFIG.OSE.assetsPath}/charge.png`,
+        image: `${CONFIG.OSE.assetsPath}/charge2.png`,
         icon: "fa-person-running",
       };
     },
   },
   tag_images: {
     get melee() {
-      return `${CONFIG.OSE.assetsPath}/melee.png`;
+      return `${CONFIG.OSE.assetsPath}/melee2.png`;
     },
     get missile() {
       return `fa-bow-arrow`;
     },
     get slow() {
-      return `${CONFIG.OSE.assetsPath}/slow.png`;
+      return `${CONFIG.OSE.assetsPath}/slow2.png`;
     },
     get twohanded() {
-      return `${CONFIG.OSE.assetsPath}/twohanded.png`;
+      return `${CONFIG.OSE.assetsPath}/twohanded2.png`;
     },
     get blunt() {
-      return `${CONFIG.OSE.assetsPath}/blunt.png`;
+      return `${CONFIG.OSE.assetsPath}/blunt2.png`;
     },
     get brace() {
-      return `${CONFIG.OSE.assetsPath}/brace.png`;
+      return `${CONFIG.OSE.assetsPath}/brace2.png`;
     },
     get splash() {
-      return `${CONFIG.OSE.assetsPath}/splash.png`;
+      return `${CONFIG.OSE.assetsPath}/splash2.png`;
     },
     get reload() {
-      return `${CONFIG.OSE.assetsPath}/reload.png`;
+      return `${CONFIG.OSE.assetsPath}/reload2.png`;
     },
     get charge() {
-      return `${CONFIG.OSE.assetsPath}/charge.png`;
+      return `${CONFIG.OSE.assetsPath}/charge2.png`;
     },
   },
   monster_saves: {
