@@ -8,6 +8,7 @@
   "OSE.Reset": "Reset",
   "OSE.Cancel": "Cancel",
   "OSE.Roll": "Roll",
+  "OSE.RollSpell": "Cast Spell",
   "OSE.Success": "Success",
   "OSE.Failure": "Failure",
 
@@ -36,6 +37,8 @@
   "OSE.Modifiers": "Modifiers",
   "OSE.RollMode": "Roll Mode",
   "OSE.RollExample": "e.g. +1d4",
+  "OSE.SpendSpellPoints": "Spend additional spell points",
+  "OSE.SpendSpellPointsHint": "Casting the spell still costs 1",
 
   "OSE.roll.formula": "{label} roll",
   "OSE.roll.appearing": "Appearing roll ({type})",
@@ -264,12 +267,13 @@
   "OSE.spells.Cast": "Cast",
   "OSE.spells.Range": "Range",
   "OSE.spells.Slots": "Slots",
+  "OSE.spells.Points": "Spell Points left",
   "OSE.spells.Class": "Class",
   "OSE.spells.Duration": "Duration",
-  "OSE.spells.Level": "Level",
+  "OSE.spells.Level": "Spell Level",
   "OSE.spells.Save": "Save",
   "OSE.spells.ResetSlots": "Reset Spell slots",
-  "OSE.spells.MemorizedSlotsHint": "Memorized slots",
+  "OSE.spells.MemorizedSlotsHint": "Spell points left",
   "OSE.spells.MaximumSlotsHint": "Available slots",
 
   "OSE.abilities.Requirements": "Requirements",
