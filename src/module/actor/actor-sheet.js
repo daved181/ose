@@ -158,13 +158,14 @@ export default class OseActorSheet extends ActorSheet {
     const spells = $(event.currentTarget)
       .closest(".inventory.spells")
       .find(".item-entry");
+
     spells.each((_, el) => {
       const { itemId } = el.dataset;
       const item = this.actor.items.get(itemId);
-      const itemData = item?.system;
+      //const itemData = item?.system;
       item.update({
         _id: item.id,
-        "system.cast": itemData.memorized,
+        "system.cast": 0,
       });
     });
   }
@@ -180,7 +181,8 @@ export default class OseActorSheet extends ActorSheet {
       }
       item.rollWeapon({ skipDialog: skipRollDialogCheck(event) });
     } else if (item.type == "spell") {
-      item.spendSpell({ skipDialog: skipRollDialogCheck(event) });
+      let allspells = this.actor;
+      item.castSpell({ skipDialog: skipRollDialogCheck(event) });
     } else {
       item.rollFormula({ skipDialog: skipRollDialogCheck(event) });
     }

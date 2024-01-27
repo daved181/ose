@@ -171,7 +171,113 @@ export default class OseItem extends Item {
     });
   }
 
-  async spendSpell() {
+  async castSpell(options = {}) {
+    const data = this.system;
+
+    if (!data.roll) {
+      console.error("This Item does not have a formula to roll!");
+    }
+
+    const label = `${this.name}`;
+    const rollParts = [data.roll];
+
+    const type = data.rollType;
+
+    const newData = {
+      actor: this.actor,
+      item: this._source,
+      roll: {
+        type,
+        target: data.rollTarget,
+        blindroll: data.blindroll,
+      },
+    };
+
+     // Roll and return
+     return this.RollSpell({
+      event: options.event,
+      parts: rollParts,
+      data: newData,
+      skipDialog: false,
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      flavor: game.i18n.format("OSE.roll.formula", { label }),
+      title: game.i18n.format("OSE.roll.formula", { label }),
+    });
+  }
+
+  async RollSpell({
+    parts = [],
+    data = {},
+    skipDialog = false,
+    speaker = null,
+    flavor = null,
+    title = null,
+    chatMessage = true,
+    flags = {},
+  } = {}) {
+    const template = `${OSE.systemPath()}/templates/chat/roll-spelldialog.html`;
+    const dialogData = {
+      formula: parts.join(" "),
+      data,
+      rollMode: data.roll.blindroll
+        ? "blindroll"
+        : game.settings.get("core", "rollMode"),
+      rollModes: CONFIG.Dice.rollModes,
+    };
+    if (skipDialog) {
+      throw new Error("RollSpell got skipDialog = true")
+      return
+    }
+
+    const rollData = {
+      parts,
+      data,
+      title,
+      flavor,
+      speaker,
+      chatMessage,
+      flags,
+    };
+    let rolled = false;
+
+    const buttons = {
+      ok: {
+        label: game.i18n.localize("OSE.RollSpell"),
+        icon: '<i class="fas fa-magic"></i>',
+        callback: (html) => {
+          rolled = true;
+          rollData.form = html[0].querySelector("form");
+          let bonus = 0;
+          if (rollData.form !== null && rollData.form.bonus.value) bonus = rollData.form.bonus.value;
+          this.spendSpell(bonus);
+          console.log(rollData.form.bonus.value)
+        },
+      },
+      cancel: {
+        icon: '<i class="fas fa-times"></i>',
+        label: game.i18n.localize("OSE.Cancel"),
+        callback: (html) => {},
+      },
+    };
+
+    const html = await renderTemplate(template, dialogData);
+    let roll;
+
+    // Create Dialog window
+    return new Promise((resolve) => {
+      new Dialog({
+        title,
+        content: html,
+        buttons,
+        default: "ok",
+        close: () => {
+          resolve(rolled ? roll : false);
+        },
+      }).render(true);
+    });
+  }
+
+  async spendSpell(bonuspoints = 0) {
     if (this.type !== "spell")
       throw new Error(
         "Trying to spend a spell on an item that is not a spell."
@@ -180,10 +286,10 @@ export default class OseItem extends Item {
     const itemData = this.system;
     await this.update({
       system: {
-        cast: itemData.cast - 1,
+        cast: itemData.cast + itemData.lvl + parseInt(bonuspoints),
       },
     });
-    await this.show({ skipDialog: true });
+    await this.show({ skipDialog: false });
   }
 
   _getRollTag(data) {

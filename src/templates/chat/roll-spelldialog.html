@@ -1,0 +1,11 @@
+<form class="ose roll-dialog">
+    {{#if data.rollData.details}}
+    <div class="roll-details">
+        {{data.rollData.details}}
+    </div>
+    {{/if}}
+    <div class="form-group">
+        <label style="flex:3;">{{localize "OSE.SpendSpellPoints"}}</label>
+        <input type="text" name="bonus" value="" placeholder="{{localize 'OSE.SpendSpellPointsHint'}}"/>
+    </div>
+</form>
