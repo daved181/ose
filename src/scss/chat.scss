@@ -1,0 +1,27 @@
+/* ----------------------------------------- */
+/*  Sheet Styles                             */
+/* ----------------------------------------- */
+
+.chat-message {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../assets/denim090.png);
+    color: white;
+    input {
+      color: white;
+    }
+    h1 {
+        color: white;
+    }
+}
+
+.message-sender {
+    color: white;
+}
+
+.message-timestamp {
+    color: white;
+}
+
+.dice-roll {
+    background-color: rgb(30, 30, 30);
+    background: url(../assets/back.png);
+}
