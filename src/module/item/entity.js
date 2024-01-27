@@ -1,6 +1,8 @@
 /**
  * @file The system-specific Item entity, containing logic for operating on all available Item types.
  */
+import OseActorSheet from "../actor/actor-sheet";
+import OseActorSheetCharacter from "../actor/character-sheet";
 import OSE from "../config";
 import OseDice from "../helpers-dice";
 
@@ -282,7 +284,7 @@ export default class OseItem extends Item {
       throw new Error(
         "Trying to spend a spell on an item that is not a spell."
       );
-
+    
     const itemData = this.system;
     await this.update({
       system: {
@@ -290,6 +292,47 @@ export default class OseItem extends Item {
       },
     });
     await this.show({ skipDialog: false });
+    this.checkSpellCatastrophe(itemData.lvl);
+    
+  }
+
+  async checkSpellCatastrophe(index) {
+    let points = this.actor["system"]["spells"]["points"];
+    let charClass = this.actor["system"]["details"]["class"];
+    if (points[index]["used"] <= 0 && charClass == "Magic User") {
+      const itemType = this.type;
+      // Basic template rendering data
+      const { token } = this.actor; // v10: prototypeToken?
+      const templateData = {
+        actor: this.actor,
+        tokenId: token ? `${token.parent.id}.${token.id}` : null,
+        item: this._source,
+        itemId: this._source.id,
+        data: await this.getChatData(),
+        labels: this.labels,
+        config: CONFIG.OSE,
+      };
+      templateData.data.properties = this.system.autoTags;
+      templateData.data.description = "input spell catastrophe description here about"
+
+      // Render the chat card template
+      const template = `${OSE.systemPath()}/templates/chat/item-card-spell-catastrophe.html`;
+      const html = await renderTemplate(template, templateData);
+
+      // Basic chat message data
+      const chatData = {
+        user: game.user.id,
+        type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+        content: html,
+        speaker: {
+          actor: this.actor.id,
+          token: this.actor.token,
+          alias: this.actor.name,
+        },
+      };
+      // Create the chat message
+      return ChatMessage.create(chatData);
+    }
   }
 
   _getRollTag(data) {
