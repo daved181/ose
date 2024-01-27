@@ -111,9 +111,6 @@ export default class OseDataModelCharacterSpells implements CharacterSpells  {
     const usedAtLvl = list[lvl] || 0;
 
     if (Object.keys(list).length == 0) { // starts with level amount of points
-      console.log("level is " + level + ", cast is " + cast)
-      let shgit = level-cast;
-      console.log("calced to " + shgit)
       return {
         ...list,
         [lvl]: level - cast,

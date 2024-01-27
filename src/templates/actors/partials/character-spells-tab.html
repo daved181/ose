@@ -22,7 +22,6 @@
     <div class="category-name">{{localize "OSE.spells.Level"}} {{id}}</div>
     <div class="field">{{localize 'OSE.spells.Points'}}</div>
     <div class="field-long flexrow">
-      {{lookup (lookup @root.system.spells.points @key) 'used'}} {{id}}
       <input
         type="text"
         value="{{lookup (lookup @root.system.spells.points @key) 'used'}}"
