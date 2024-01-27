@@ -37,59 +37,9 @@
       "path": "dist/lang/en.json"
     },
     {
-      "lang": "it",
-      "name": "Italiano (Italia)",
-      "path": "dist/lang/it.json"
-    },
-    {
-      "lang": "fr",
-      "name": "Français (France)",
-      "path": "dist/lang/fr.json"
-    },
-    {
-      "lang": "pt-BR",
-      "name": "Português (Brasil)",
-      "path": "dist/lang/pt-BR.json"
-    },
-    {
-      "lang": "es",
-      "name": "Español (España)",
-      "path": "dist/lang/es.json"
-    },
-    {
-      "lang": "de",
-      "name": "Deutsch (Deutschland)",
-      "path": "dist/lang/de.json"
-    },
-    {
-      "lang": "ca",
-      "name": "Català (Andorra)",
-      "path": "dist/lang/ca.json"
-    },
-    {
-      "lang": "cn",
-      "name": "简体中文 (中国)",
-      "path": "dist/lang/zh-CN.json"
-    },
-    {
       "lang": "sv",
       "name": "Svenska (Sverige)",
       "path": "dist/lang/sv.json"
-    },
-    {
-      "lang": "pl",
-      "name": "Polski (Polska)",
-      "path": "dist/lang/pl.json"
-    },
-    {
-      "lang": "ko",
-      "name": "한국어 (한국)",
-      "path": "dist/lang/ko.json"
-    },
-    {
-      "lang": "ru",
-      "name": "Русский (Россия)",
-      "path": "dist/lang/ru.json"
     }
   ],
   "gridDistance": 5,
