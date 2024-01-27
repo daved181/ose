@@ -97,7 +97,7 @@
     }
   }
   .window-content {
-    background: rgb(27, 27, 27);
+    background: linear-gradient(rgba(20, 20, 20, 0.5), rgba(20, 20, 20, 0.5)), url(../assets/denim075.png);
     color: white;
     input {
       color: white;
@@ -123,7 +123,7 @@
       margin-left: -5px;
       text-indent: 4px;
       line-height: 16px;
-      background: rgb(163, 163, 163); // url("/ui/parchment.jpg") where teh fuck is this thing?????
+      background: rgb(97, 96, 96);
       border-top-right-radius: 4px;
       border-top-left-radius: 80px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.15);

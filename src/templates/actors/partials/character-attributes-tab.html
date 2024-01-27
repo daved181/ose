@@ -74,22 +74,22 @@
         <div class="flexrow">
             <div class="health">
                 <input class="health-value health-top" name="system.hp.value" type="text" value="{{system.hp.value}}"
-                    data-dtype="Number" placeholder="0" title="{{localize 'OSE.Health'}}" />
+                    data-dtype="Number" placeholder="0" title="{{localize 'OSE.Health'}}" style="color:black;"/>
                 <input class="health-value health-bottom" name="system.hp.max" type="text" value="{{system.hp.max}}"
-                    data-dtype="Number" placeholder="0" title="{{localize 'OSE.HealthMax'}}" />
+                    data-dtype="Number" placeholder="0" title="{{localize 'OSE.HealthMax'}}" style="color:black;"/>
                 <div class="health-empty" style="height:{{counter false system.hp.value system.hp.max}}%"></div>
                 <div class="health-full" style="height:{{counter true system.hp.value system.hp.max}}%"></div>
             </div>
             <div class="health armor-class">
                 {{#if @root.system.usesAscendingAC}}
-                <div class="health-value health-top" title="{{localize 'OSE.ArmorClass'}}">{{system.aac.value}}</div>
-                <div class="health-value health-bottom" title="{{localize 'OSE.ArmorClassNaked'}}">
+                <div class="health-value health-top" title="{{localize 'OSE.ArmorClass'}}" style="color:black;">{{system.aac.value}}</div>
+                <div class="health-value health-bottom" title="{{localize 'OSE.ArmorClassNaked'}}" style="color:black;">
                     {{system.aac.naked}}</div>
                 {{#if system.aac.shield}}<div class="shield"
                     title="{{localize 'OSE.items.hasShield'}} ({{system.aac.shield}})"><i class="fas fa-shield-alt"></i>
                 </div>{{/if}}
                 {{else}}
-                <div class="health-value health-top" title="{{localize 'OSE.ArmorClass'}}">{{system.ac.value}}</div>
+                <div class="health-value health-top" title="{{localize 'OSE.ArmorClass'}}" >{{system.ac.value}} </div>
                 <div class="health-value health-bottom" title="{{localize 'OSE.ArmorClassNaked'}}">
                     {{system.ac.naked}}</div>
                 {{#if system.ac.shield}}<div class="shield"
