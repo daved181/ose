@@ -6,6 +6,9 @@ import OseActorSheetCharacter from "../actor/character-sheet";
 import OSE from "../config";
 import OseDice from "../helpers-dice";
 
+
+let OVERCAST_CLASSES = ["Magic User"]
+
 /**
  * Override and extend the basic :class:`Item` implementation
  */
@@ -196,7 +199,7 @@ export default class OseItem extends Item {
     };
 
      // Roll and return
-     return this.RollSpell({
+     return this.showSpellDialog({
       event: options.event,
       parts: rollParts,
       data: newData,
@@ -207,7 +210,7 @@ export default class OseItem extends Item {
     });
   }
 
-  async RollSpell({
+  async showSpellDialog({
     parts = [],
     data = {},
     skipDialog = false,
@@ -252,7 +255,6 @@ export default class OseItem extends Item {
           let bonus = 0;
           if (rollData.form !== null && rollData.form.bonus.value) bonus = rollData.form.bonus.value;
           this.spendSpell(bonus);
-          console.log(rollData.form.bonus.value)
         },
       },
       cancel: {
@@ -284,24 +286,56 @@ export default class OseItem extends Item {
       throw new Error(
         "Trying to spend a spell on an item that is not a spell."
       );
-    
+
     const itemData = this.system;
+    
+    let charClass = this.actor["system"]["details"]["class"]; //check if able to cast
+    let points = this.actor["system"]["spells"]["points"];
+    if (points[itemData.lvl]["used"] - (itemData.lvl + parseInt(bonuspoints))  < 0) {
+      if (!OVERCAST_CLASSES.includes(charClass)) {
+        ui.notifications.error("You don't have enough spell points to cast the spell");
+        return;
+      }
+    }
+    
     await this.update({
       system: {
         cast: itemData.cast + itemData.lvl + parseInt(bonuspoints),
       },
     });
     await this.show({ skipDialog: false });
+
     this.checkSpellCatastrophe(itemData.lvl);
-    
   }
 
   async checkSpellCatastrophe(index) {
     let points = this.actor["system"]["spells"]["points"];
     let charClass = this.actor["system"]["details"]["class"];
 
-    if (points[index]["used"] < 0 && (charClass == "Magic User")) {
-      const itemType = this.type;
+    if (points[index]["used"] >= 0) { // check if catastrophe possible
+      return;
+    }
+
+    if (!OVERCAST_CLASSES.includes(charClass)) {
+      console.error("class that can't make spell catastrophes, attempted to make one, class:", charClass);
+      return;
+    }
+
+    if (points[index]["used"] < 0) {    
+      let rollForCatastrophe = await new Roll("1d20").roll();
+      //game.dice3d?.showForRoll(roll); // remove this line if you dont want dice to be shown at all!
+      let spellDifficulty = this.system.lvl + 10;
+
+      if (rollForCatastrophe.total < spellDifficulty) {
+        // TODO: roll for which catastrophe to create
+
+        this.createSpellCatastropheChatMessage(rollForCatastrophe.total, "input spell catastrophe description here about");
+      }
+    }
+  }
+
+  async createSpellCatastropheChatMessage(catastropheRollResult, catastropheDescription) {
+    const itemType = this.type;
       // Basic template rendering data
       const { token } = this.actor; // v10: prototypeToken?
       const templateData = {
@@ -314,7 +348,9 @@ export default class OseItem extends Item {
         config: CONFIG.OSE,
       };
       templateData.data.properties = this.system.autoTags;
-      templateData.data.description = "input spell catastrophe description here about"
+      templateData.data.reason = this.actor.name + " rolled " + catastropheRollResult + " and incurred a spell catastrophe!";
+
+      templateData.data.description = catastropheDescription;
 
       // Render the chat card template
       const template = `${OSE.systemPath()}/templates/chat/item-card-spell-catastrophe.html`;
@@ -333,7 +369,6 @@ export default class OseItem extends Item {
       };
       // Create the chat message
       return ChatMessage.create(chatData);
-    }
   }
 
   _getRollTag(data) {
