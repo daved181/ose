@@ -289,7 +289,8 @@ export default class OseItem extends Item {
 
     const itemData = this.system;
     
-    let charClass = this.actor["system"]["details"]["class"]; //check if able to cast
+    //check if able to cast
+    let charClass = this.actor["system"]["details"]["class"]; 
     let points = this.actor["system"]["spells"]["points"];
     if (points[itemData.lvl]["used"] - (itemData.lvl + parseInt(bonuspoints))  < 0) {
       if (!OVERCAST_CLASSES.includes(charClass)) {
@@ -336,39 +337,39 @@ export default class OseItem extends Item {
 
   async createSpellCatastropheChatMessage(catastropheRollResult, catastropheDescription) {
     const itemType = this.type;
-      // Basic template rendering data
-      const { token } = this.actor; // v10: prototypeToken?
-      const templateData = {
-        actor: this.actor,
-        tokenId: token ? `${token.parent.id}.${token.id}` : null,
-        item: this._source,
-        itemId: this._source.id,
-        data: await this.getChatData(),
-        labels: this.labels,
-        config: CONFIG.OSE,
-      };
-      templateData.data.properties = this.system.autoTags;
-      templateData.data.reason = this.actor.name + " rolled " + catastropheRollResult + " and incurred a spell catastrophe!";
+    // Basic template rendering data
+    const { token } = this.actor; // v10: prototypeToken?
+    const templateData = {
+      actor: this.actor,
+      tokenId: token ? `${token.parent.id}.${token.id}` : null,
+      item: this._source,
+      itemId: this._source.id,
+      data: await this.getChatData(),
+      labels: this.labels,
+      config: CONFIG.OSE,
+    };
+    templateData.data.properties = this.system.autoTags;
+    templateData.data.reason = this.actor.name + " rolled " + catastropheRollResult + " and incurred a spell catastrophe!";
 
-      templateData.data.description = catastropheDescription;
+    templateData.data.description = catastropheDescription;
 
-      // Render the chat card template
-      const template = `${OSE.systemPath()}/templates/chat/item-card-spell-catastrophe.html`;
-      const html = await renderTemplate(template, templateData);
+    // Render the chat card template
+    const template = `${OSE.systemPath()}/templates/chat/item-card-spell-catastrophe.html`;
+    const html = await renderTemplate(template, templateData);
 
-      // Basic chat message data
-      const chatData = {
-        user: game.user.id,
-        type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-        content: html,
-        speaker: {
-          actor: this.actor.id,
-          token: this.actor.token,
-          alias: this.actor.name,
-        },
-      };
-      // Create the chat message
-      return ChatMessage.create(chatData);
+    // Basic chat message data
+    const chatData = {
+      user: game.user.id,
+      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+      content: html,
+      speaker: {
+        actor: this.actor.id,
+        token: this.actor.token,
+        alias: this.actor.name,
+      },
+    };
+    // Create the chat message
+    return ChatMessage.create(chatData);
   }
 
   _getRollTag(data) {
