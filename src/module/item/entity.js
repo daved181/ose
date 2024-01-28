@@ -299,7 +299,8 @@ export default class OseItem extends Item {
   async checkSpellCatastrophe(index) {
     let points = this.actor["system"]["spells"]["points"];
     let charClass = this.actor["system"]["details"]["class"];
-    if (points[index]["used"] <= 0 && charClass == "Magic User") {
+
+    if (points[index]["used"] < 0 && (charClass == "Magic User")) {
       const itemType = this.type;
       // Basic template rendering data
       const { token } = this.actor; // v10: prototypeToken?
