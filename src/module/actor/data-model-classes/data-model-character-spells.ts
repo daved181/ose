@@ -38,6 +38,7 @@ export interface CharacterSpells {
   spellList: Spells;
   slots: Slots;
   points: Points;
+  spellmod: Number;
 }
 
 export default class OseDataModelCharacterSpells implements CharacterSpells  {
@@ -49,6 +50,8 @@ export default class OseDataModelCharacterSpells implements CharacterSpells  {
 
   #points = {};
 
+  #spellmod = 0;
+
   constructor(
     {
       enabled,
@@ -58,7 +61,7 @@ export default class OseDataModelCharacterSpells implements CharacterSpells  {
   ) {
     this.#spellList = spellList;
     this.#enabled = enabled || false;
-
+    
     //const usedSlots = this.#spellList?.reduce(this.#reducedUsedSlots, {}) || {};
 
     const usedPoints = this.#spellList?.reduce(this.#reducedUsedPoints, {}) || {};
@@ -73,6 +76,15 @@ export default class OseDataModelCharacterSpells implements CharacterSpells  {
         this.#usedAndMaxPoints(list, item, idx, usedPoints, maxPoints),
       {}
     );
+    
+    // get spellmod
+    let item = this.#spellList.find(({ system: { type } }: Item) => Object); 
+    let actor = item?.actor;
+    if (actor != undefined) {
+      this.#spellmod = this.#getSpellMod(actor);
+    } else {
+      this.#spellmod = 0;
+    }
   }
 
   get enabled() {
@@ -83,11 +95,28 @@ export default class OseDataModelCharacterSpells implements CharacterSpells  {
     this.#enabled = state;
   }
 
+  get spellmod() {
+    return this.#spellmod;
+  }
+
   get spellList() {
     return this.#spellList.reduce(
       (list, item) => reducedSpells(list, item),
       {}
     );
+  }
+
+  #getSpellMod(actor: Actor | null | undefined) {
+    let charClass = actor["system"]["details"]["class"];
+    let scores = actor["system"]["scores"];
+    switch (charClass) {
+      case 'Magic User':
+        return scores["int"]["mod"];
+      case 'Cleric':
+        return scores["wis"]["mod"];
+      default:
+        return 0;
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this

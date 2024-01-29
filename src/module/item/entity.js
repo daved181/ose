@@ -323,7 +323,7 @@ export default class OseItem extends Item {
     }
 
     if (points[index]["used"] < 0) {    
-      let rollForCatastrophe = await new Roll("1d20").roll();
+      let rollForCatastrophe = await new Roll("1d20 + @spellmod", {spellmod: this.actor["system"]["spells"]["spellmod"]}).roll();
       //game.dice3d?.showForRoll(roll); // remove this line if you dont want dice to be shown at all!
       let spellDifficulty = this.system.lvl + 10;
 

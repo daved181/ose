@@ -57,6 +57,7 @@
       "spellcaster": {
         "spells": {
           "enabled": false,
+          "spellmod": 0,
           "1": {
             "max": 0
           },
